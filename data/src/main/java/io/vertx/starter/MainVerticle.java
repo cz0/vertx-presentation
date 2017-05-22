@@ -11,7 +11,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
 
-  public static final String ADDRESS = "some-nice-address";
+  public static final String ADDRESS = "address";
   public static final String HOST = "localhost";
 
 
