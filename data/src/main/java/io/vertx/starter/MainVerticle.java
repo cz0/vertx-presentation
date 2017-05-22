@@ -1,58 +1,39 @@
 package io.vertx.starter;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
+import io.vertx.redis.RedisClient;
+import io.vertx.redis.RedisOptions;
 
 public class MainVerticle extends AbstractVerticle {
 
+  private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
+
+  public static final String ADDRESS = "some-nice-address";
+  public static final String HOST = "localhost";
+
+
   @Override
   public void start() {
-    Router router = Router.router(vertx);
-    router.route().handler(BodyHandler.create());
-    router.get("/person").handler(req -> {
-      String boris = Json.encode(new Person("Boris", 35));
-      req.response().end(boris);
+    RedisClient redis = RedisClient.create(vertx, new RedisOptions().setHost(HOST));
+
+    LOG.info("Redis is ready to get messages on the address: " + ADDRESS);
+
+    vertx.eventBus().consumer(ADDRESS, message -> {
+      JsonObject messageBody = (JsonObject) message.body();
+
+      LOG.info("Redis received message: " + messageBody);
+
+      redis.hmset("key:" + messageBody.getInteger("counter"), messageBody, res -> {
+        if (res.succeeded()) {
+          LOG.info("Value stored");
+        } else {
+          LOG.info(res.cause().getMessage());
+        }
+      });
     });
-    router.post("/person").handler(req -> {
-      JsonObject json = req.getBodyAsJson();
-      vertx.eventBus().publish("topic-1", json);
-      req.response().end("Success");
-    });
-    router.get("/home").handler(req -> req.response().end("Home page"));
-
-    vertx.createHttpServer().requestHandler(router::accept).listen(8080);
-  }
-
-  static class Person {
-    private String name;
-    private int age;
-
-    public String getName() {
-      return name;
-    }
-
-    public void setName(String name) {
-      this.name = name;
-    }
-
-    public int getAge() {
-      return age;
-    }
-
-    public void setAge(int age) {
-      this.age = age;
-    }
-
-    public Person() {
-    }
-
-    public Person(String name, int age) {
-      this.name = name;
-      this.age = age;
-    }
   }
 
 }
