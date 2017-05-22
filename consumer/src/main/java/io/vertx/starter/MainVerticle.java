@@ -17,7 +17,7 @@ public class MainVerticle extends AbstractVerticle {
   public void start() {
     String address = config().getString("address");
     LOG.info(STEPAN + " is ready to get messages on the address: " + address);
-    vertx.eventBus().consumer(address, message -> {
+    vertx.eventBus().consumer("address", message -> {
       JsonObject messageBody = (JsonObject)message.body();
       LOG.info(STEPAN + " received message: " + messageBody);
       message.reply("Thanks for the message!");

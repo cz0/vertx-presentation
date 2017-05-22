@@ -21,7 +21,7 @@ public class MainVerticle extends AbstractVerticle {
         .put("content", "Hello there!")
         .put("counter", i++);
       LOG.info(BORIS + " sends " + message);
-      vertx.eventBus().publish(config().getString("address"), message);
+      vertx.eventBus().publish("address", message);
     });
   }
 
