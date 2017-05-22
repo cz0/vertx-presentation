@@ -1,7 +1,6 @@
 <html>
   <head>
     <title></title>
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="//cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
     <script src="vertx-eventbus.js"></script>
   </head>
@@ -21,11 +20,14 @@
     };
     eb.onopen = function () {
       eb.registerHandler("address", function (err, msg) {
-        if (err) {
-          console.log(err);
+        if(typeof msg.body === 'object') {
+            msg.body = JSON.stringify(msg.body);
         }
-        var str = "<code>" + msg.body + "</code><br>";
-        $('#status').prepend(str);
+        var str = ["<code>", msg.body, "</code><br>"].join("");
+        var status = document.getElementById("status");
+        var el = document.createElement('p');
+        el.innerHTML = str;
+        status.appendChild(el);
       });
     };
   </script>
