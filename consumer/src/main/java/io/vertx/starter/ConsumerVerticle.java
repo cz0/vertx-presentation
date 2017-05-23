@@ -1,17 +1,14 @@
 package io.vertx.starter;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
 
-public class MainVerticle extends AbstractVerticle {
+public class ConsumerVerticle extends AbstractVerticle {
 
   private static final String STEPAN = "Stepan";
-  private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ConsumerVerticle.class);
 
   @Override
   public void start() {

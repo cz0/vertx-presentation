@@ -28,7 +28,7 @@ public class MainVerticleTest {
 
     vertx = Vertx.vertx();
 
-    vertx.deployVerticle(MainVerticle.class.getName(), options, context.asyncAssertSuccess());
+    vertx.deployVerticle(SupplierVerticle.class.getName(), options, context.asyncAssertSuccess());
   }
 
   @After

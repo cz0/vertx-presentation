@@ -15,17 +15,15 @@
   <div id="status" class="news"></div>
   <script>
     var eb = new EventBus("http://localhost:8080/eventbus");
-    var status = document.getElementById("status");
-    var el = document.createElement('p');
 
     eb.onclose = function() {
         console.log('Close connection');
     };
     eb.onopen = function () {
       eb.registerHandler("address", function (err, msg) {
-        if(typeof msg.body === 'object') {
-            msg.body = JSON.stringify(msg.body);
-        }
+        var status = document.getElementById("status");
+        var el = document.createElement('p');
+        msg.body = JSON.stringify(msg.body);
         el.innerHTML = ["<code>", msg.body, "</code><br>"].join("");
         status.appendChild(el);
       });

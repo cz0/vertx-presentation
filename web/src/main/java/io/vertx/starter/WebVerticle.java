@@ -10,7 +10,9 @@ import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.PermittedOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 
-public class MainVerticle extends AbstractVerticle {
+import java.util.HashMap;
+
+public class WebVerticle extends AbstractVerticle {
 
   @Override
   public void start() throws Exception {
@@ -26,7 +28,10 @@ public class MainVerticle extends AbstractVerticle {
     vertx.createHttpServer().requestHandler(router::accept).listen(8080);
 
     vertx.setPeriodic(5000, t -> {
-        vertx.eventBus().publish("address", "news from the web verticle!");
+        HashMap<String, Object> news = new HashMap<>();
+        news.put("News", "Vertx is cool");
+        JsonObject data = new JsonObject(news);
+        vertx.eventBus().publish("address", data);
       }
     );
   }

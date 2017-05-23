@@ -7,9 +7,9 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
 
-public class MainVerticle extends AbstractVerticle {
+public class DataVerticle extends AbstractVerticle {
 
-  private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
+  private static final Logger LOG = LoggerFactory.getLogger(DataVerticle.class);
 
   public static final String ADDRESS = "address";
   public static final String HOST = "localhost";

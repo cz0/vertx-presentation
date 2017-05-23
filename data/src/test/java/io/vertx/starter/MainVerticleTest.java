@@ -36,9 +36,9 @@ public class MainVerticleTest {
   public void before(TestContext context) {
     vertx = Vertx.vertx();
 
-    vertx.deployVerticle(MainVerticle.class.getName(), new DeploymentOptions(), context.asyncAssertSuccess());
+    vertx.deployVerticle(DataVerticle.class.getName(), new DeploymentOptions(), context.asyncAssertSuccess());
 
-    redis = RedisClient.create(vertx, new RedisOptions().setHost(MainVerticle.HOST));
+    redis = RedisClient.create(vertx, new RedisOptions().setHost(DataVerticle.HOST));
   }
 
   @After
@@ -48,7 +48,7 @@ public class MainVerticleTest {
 
   @Test
   public void talkToRedis(TestContext context) {
-    vertx.eventBus().publish(MainVerticle.ADDRESS, new JsonObject()
+    vertx.eventBus().publish(DataVerticle.ADDRESS, new JsonObject()
       .put("content", "Hello, " + targetCountry)
       .put("counter", targetCountry.length()));
 

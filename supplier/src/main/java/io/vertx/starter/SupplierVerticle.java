@@ -5,10 +5,10 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 
-public class MainVerticle extends AbstractVerticle {
+public class SupplierVerticle extends AbstractVerticle {
 
   private static final String BORIS = "Boris";
-  Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
+  Logger LOG = LoggerFactory.getLogger(SupplierVerticle.class);
   int i = 1;
 
   @Override
